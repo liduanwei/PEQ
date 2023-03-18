@@ -7,156 +7,30 @@
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="f:"/>
-
-        <EditText
-            android:id="@+id/et_f"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:inputType="numberDecimal"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Q:"/>
-
-        <EditText
-            android:id="@+id/et_Q"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:inputType="numberDecimal"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="gain:"/>
-
-        <EditText
-            android:id="@+id/et_gain"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:inputType="numberDecimal"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="fs:"/>
-
-        <EditText
-            android:id="@+id/et_fs"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:inputType="numberDecimal"/>
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type:"
-            android:layout_gravity="center_vertical"/>
-
-        <RadioGroup
-            android:id="@+id/rg_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp">
-            <RadioButton
-                android:id="@+id/rbtn_lowshelf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LowShelf"
-                android:checked="true"/>
-            <RadioButton
-                android:id="@+id/rbtn_peakshelf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PeakShelf"/>
-            <RadioButton
-                android:id="@+id/rbtn_highshelf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HighShelf"/>
-
-
-        </RadioGroup>
-
-    </LinearLayout>
-
-
-   <Button
-       android:id="@+id/btn_compute_coeff"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_margin="10dp"
-       android:text="Compute"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Coeff"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-   <TextView
-       android:id="@+id/tv_coeff_show"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_margin="10dp"/>
-
+    <TextView
+        android:id="@+id/tv_coeff_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
 
     <LinearLayout
         android:id="@+id/ll_chart_view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
     </LinearLayout>
 
-
-
-<!--
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="H"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/tv_h"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"/>
--->
 
     <Button
         android:id="@+id/btn_compute_coeffs"
@@ -164,8 +38,146 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Compute coeffs "
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_f"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:hint="f:" />
+
+        <SeekBar
+            android:id="@+id/sk_f"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_Q"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:hint="Q:" />
+
+        <SeekBar
+            android:id="@+id/sk_Q"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_gain"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:hint="gain:" />
+
+        <SeekBar
+            android:id="@+id/sk_gain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_pre_amp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:hint="preAmp" />
+
+        <SeekBar
+            android:id="@+id/sk_pre_amp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_fs"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:hint="fs: 48000" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Type:" />
+
+        <RadioGroup
+            android:id="@+id/rg_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbtn_lowshelf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="LowShelf" />
+
+            <RadioButton
+                android:id="@+id/rbtn_peakshelf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PeakShelf" />
+
+            <RadioButton
+                android:id="@+id/rbtn_highshelf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HighShelf" />
+
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_compute_coeff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Compute" />
 
 </LinearLayout>

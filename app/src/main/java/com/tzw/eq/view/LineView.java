@@ -22,7 +22,7 @@ import java.util.List;
  * 折线图
  */
 public class LineView extends View {
-    private static final int[] colors ={Color.BLUE,Color.RED,Color.YELLOW,0xFF800080,Color.GREEN,Color.GRAY,0xFFFF9800,0xFF90EE90,0xFFFF7F24,0xFFFF7F00};
+    private static final int[] colors = {Color.BLUE, Color.RED, Color.YELLOW, 0xFF800080, Color.GREEN, Color.GRAY, 0xFFFF9800, 0xFF90EE90, 0xFFFF7F24, 0xFFFF7F00};
 
     private GraphicalView mChartView;
     /**
@@ -59,7 +59,7 @@ public class LineView extends View {
         return mChartView;
     }*/
 
-    public GraphicalView execute(String xTitle,String yTitle) {
+    public GraphicalView execute(String xTitle, String yTitle) {
         if (mChartView == null) {
             // 时间戳样式
         /*    mChartView = ChartFactory.getTimeChartView(mContext,
@@ -69,10 +69,10 @@ public class LineView extends View {
             xValues[0] = 0;
             double[] yValues = new double[1];
             yValues[0] = 0;
-            mXYSeries = getXYSeries(mDataset,"",xValues,yValues,0);
+            mXYSeries = getXYSeries(mDataset, "", xValues, yValues, 0);
             mDataset.addSeries(mXYSeries);
-            XYMultipleSeriesRenderer renderer = getDemoRenderer(xTitle,yTitle);
-            mChartView = ChartFactory.getLineChartView(mContext,mDataset,renderer);
+            XYMultipleSeriesRenderer renderer = getDemoRenderer(xTitle, yTitle);
+            mChartView = ChartFactory.getLineChartView(mContext, mDataset, renderer);
         }
         return mChartView;
     }
@@ -80,7 +80,7 @@ public class LineView extends View {
     /**
      * @return 绘制多条曲线调用
      */
-    public GraphicalView execute2(String xTitle,String yTitle) {
+    public GraphicalView execute2(String xTitle, String yTitle) {
         if (mChartView == null) {
             // 时间戳样式
         /*    mChartView = ChartFactory.getTimeChartView(mContext,
@@ -90,10 +90,10 @@ public class LineView extends View {
             xValues[0] = 0;
             double[] yValues = new double[1];
             yValues[0] = 0;
-            mXYSeries = getXYSeries(mDataset,"",xValues,yValues,0);
+            mXYSeries = getXYSeries(mDataset, "", xValues, yValues, 0);
             mDataset.addSeries(mXYSeries);
-            xyMultipleSeriesRenderer = getDemoRenderer2(xTitle,yTitle);
-            mChartView = ChartFactory.getLineChartView(mContext,mDataset,xyMultipleSeriesRenderer);
+            xyMultipleSeriesRenderer = getDemoRenderer2(xTitle, yTitle);
+            mChartView = ChartFactory.getLineChartView(mContext, mDataset, xyMultipleSeriesRenderer);
         }
         return mChartView;
     }
@@ -136,13 +136,13 @@ public class LineView extends View {
      *
      * @return
      */
-    public XYMultipleSeriesRenderer getDemoRenderer(String xTitle,String yTitle) {
+    public XYMultipleSeriesRenderer getDemoRenderer(String xTitle, String yTitle) {
         /**
          * 渲染器
          */
         XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
         // mRenderer.setChartTitle("随机数据");// 标题
-         mRenderer.setXTitle(xTitle); // x轴说明
+        mRenderer.setXTitle(xTitle); // x轴说明
         mRenderer.setYTitle(yTitle);
         mRenderer.setChartTitleTextSize(20);
         mRenderer.setAxisTitleTextSize(30);
@@ -156,6 +156,7 @@ public class LineView extends View {
         mRenderer.setYLabelsAlign(Paint.Align.LEFT);
         mRenderer.setMargins(new int[]{5, 50, 0, 5});// 上左下右{ 20, 30, 100, 0})
         XYSeriesRenderer r = new XYSeriesRenderer();
+        r.setLineWidth(6);
         r.setColor(Color.BLUE);
         r.setChartValuesTextSize(15);
         r.setChartValuesSpacing(3);
@@ -167,10 +168,10 @@ public class LineView extends View {
         mRenderer.setMarginsColor(Color.WHITE);
         mRenderer.setPanEnabled(false, false);
         mRenderer.setShowGrid(true);
-        // mRenderer.setYLabels(10);// 设置Y轴默认显示个数
-/*        mRenderer.setXLabels(0);// 设置X轴默认显示个数
-        mRenderer.setYAxisMax(90);// 纵坐标最大值
-        mRenderer.setYAxisMin(0);// 纵坐标最小值*/
+        mRenderer.setYLabels(31);// 设置Y轴默认显示个数
+        mRenderer.setXLabels(11);// 设置X轴默认显示个数
+        mRenderer.setYAxisMax(15);// 纵坐标最大值
+        mRenderer.setYAxisMin(-15);// 纵坐标最小值
         mRenderer.setInScroll(true);
         return mRenderer;
     }
@@ -180,7 +181,7 @@ public class LineView extends View {
      *
      * @return
      */
-    public XYMultipleSeriesRenderer getDemoRenderer2(String xTitle,String yTitle) {
+    public XYMultipleSeriesRenderer getDemoRenderer2(String xTitle, String yTitle) {
         /**
          * 渲染器
          */
@@ -214,10 +215,10 @@ public class LineView extends View {
         mRenderer.setMarginsColor(Color.WHITE);
         mRenderer.setPanEnabled(false, false);
         mRenderer.setShowGrid(true);
-        // mRenderer.setYLabels(10);// 设置Y轴默认显示个数
-/*        mRenderer.setXLabels(0);// 设置X轴默认显示个数
-        mRenderer.setYAxisMax(90);// 纵坐标最大值
-        mRenderer.setYAxisMin(0);// 纵坐标最小值*/
+        mRenderer.setYLabels(31);// 设置Y轴默认显示个数
+        mRenderer.setXLabels(11);// 设置X轴默认显示个数
+        mRenderer.setYAxisMax(15);// 纵坐标最大值
+        mRenderer.setYAxisMin(-15);// 纵坐标最小值
         mRenderer.setInScroll(true);
         return mRenderer;
     }
@@ -225,22 +226,24 @@ public class LineView extends View {
 
     public XYMultipleSeriesDataset buildDataset() {
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();/* 创建图表数据集 */
-       // addXYSeries(dataset, titles, xValues, yValues, 0);              /* 添加单条曲线数据到图表数据集中 */
+        // addXYSeries(dataset, titles, xValues, yValues, 0);              /* 添加单条曲线数据到图表数据集中 */
         return dataset;
     }
 
-    /*   *//**
+    /*   */
+
+    /**
      * 曲线图(数据集) : 创建曲线图图表数据集
      *
-     * @param title 赋予的标题
+     * @param title   赋予的标题
      * @param xValues x轴的数据
      * @param yValues y轴的数据
      * @return XY轴数据集
      */
-    public void updateLine(String title,double[] xValues,double[] yValues){
+    public void updateLine(String title, double[] xValues, double[] yValues) {
         mDataset.removeSeries(mXYSeries);
 
-        mXYSeries = getXYSeries(mDataset,title,xValues,yValues,0);
+        mXYSeries = getXYSeries(mDataset, title, xValues, yValues, 0);
         mDataset.addSeries(mXYSeries);
         // 曲线更新
         mChartView.invalidate();
@@ -248,16 +251,17 @@ public class LineView extends View {
 
     /**
      * 更新多条曲线
-     * @param titles 赋予的标题组,数组大小为线条数
+     *
+     * @param titles  赋予的标题组,数组大小为线条数
      * @param xValues x轴的数据组,list大小为线条数
      * @param yValues y轴的数据组，list大小为线条数
      */
     public void updateLines(String[] titles, List<double[]> xValues,
-                            List<double[]> yValues){
+                            List<double[]> yValues) {
         mDataset.clear();
         xyMultipleSeriesRenderer.removeAllRenderers();
         int length = titles.length;                         /* 获取标题个数 */
-        for (int i = 0; i < length-1; i++) {
+        for (int i = 0; i < length - 1; i++) {
             XYSeriesRenderer r = new XYSeriesRenderer();
             r.setColor(colors[i]);
             r.setChartValuesTextSize(15);
@@ -268,7 +272,7 @@ public class LineView extends View {
             r.setFillBelowLineColor(Color.WHITE);*/
             r.setFillPoints(true);
             r.setStroke(BasicStroke.DASHED);
-             xyMultipleSeriesRenderer.addSeriesRenderer(r);
+            xyMultipleSeriesRenderer.addSeriesRenderer(r);
         }
         XYSeriesRenderer r = new XYSeriesRenderer();
         r.setColor(Color.BLACK);
@@ -281,23 +285,23 @@ public class LineView extends View {
         r.setFillPoints(true);
         r.setStroke(BasicStroke.SOLID);
         xyMultipleSeriesRenderer.addSeriesRenderer(r);
-        addXYSeries(mDataset,titles,xValues,yValues,0);
+        addXYSeries(mDataset, titles, xValues, yValues, 0);
         // 曲线更新
         mChartView.invalidate();
     }
 
     /**
-     * @param titles 赋予的标题组,数组大小为线条数
-     * @param xValues x轴的数据组,list大小为线条数
-     * @param yValues y轴的数据组，list大小为线条数
+     * @param titles        赋予的标题组,数组大小为线条数
+     * @param xValues       x轴的数据组,list大小为线条数
+     * @param yValues       y轴的数据组，list大小为线条数
      * @param isSemilogDraw 是否进行半对数绘制
      */
     public void updateLines(String[] titles, List<double[]> xValues,
-                            List<double[]> yValues,boolean isSemilogDraw){
+                            List<double[]> yValues, boolean isSemilogDraw) {
         mDataset.clear();
         xyMultipleSeriesRenderer.removeAllRenderers();
         int length = titles.length;                         /* 获取标题个数 */
-        for (int i = 0; i < length-1; i++) {
+        for (int i = 0; i < length - 1; i++) {
             XYSeriesRenderer r = new XYSeriesRenderer();
             r.setColor(colors[i]);
             r.setChartValuesTextSize(15);
@@ -322,24 +326,23 @@ public class LineView extends View {
         r.setStroke(BasicStroke.SOLID);
         xyMultipleSeriesRenderer.addSeriesRenderer(r);
 
-        addXYSeries(mDataset,titles,xValues,yValues,0); //
+        addXYSeries(mDataset, titles, xValues, yValues, 0); //
         // 曲线更新
-        if(isSemilogDraw){
+        if (isSemilogDraw) {
             xyMultipleSeriesRenderer.setXLabels(0);
             double[] xV = xValues.get(0);    //针对xV范围为【20,20000】,按对数进行划分
-            xyMultipleSeriesRenderer.addXTextLabel(xV[0],"20");
-            xyMultipleSeriesRenderer.addXTextLabel(xV[47],"100");
-            xyMultipleSeriesRenderer.addXTextLabel(xV[93],"500");
-            xyMultipleSeriesRenderer.addXTextLabel(xV[115],"1k");
-            xyMultipleSeriesRenderer.addXTextLabel(xV[159],"5k");
-            xyMultipleSeriesRenderer.addXTextLabel(xV[180],"10k");
-            xyMultipleSeriesRenderer.addXTextLabel(xV[199],"20k");
+            xyMultipleSeriesRenderer.addXTextLabel(xV[0], "20");
+            xyMultipleSeriesRenderer.addXTextLabel(xV[47], "100");
+            xyMultipleSeriesRenderer.addXTextLabel(xV[93], "500");
+            xyMultipleSeriesRenderer.addXTextLabel(xV[115], "1k");
+            xyMultipleSeriesRenderer.addXTextLabel(xV[159], "5k");
+            xyMultipleSeriesRenderer.addXTextLabel(xV[180], "10k");
+            xyMultipleSeriesRenderer.addXTextLabel(xV[199], "20k");
         }
 
 
         mChartView.invalidate();
     }
-
 
 
     /**
@@ -350,10 +353,10 @@ public class LineView extends View {
      * @param xValues x轴数据集合
      * @param yValues y轴数据集合
      * @param scale   缩放
-     *
-     * titles 数组个数 与 xValues, yValues 个数相同
-     * tittle 与 一个图标可能有多条曲线, 每个曲线都有一个标题
-     * XYSeries 是曲线图中的 一条曲线, 其中封装了 曲线名称, X轴和Y轴数据
+     *                <p>
+     *                titles 数组个数 与 xValues, yValues 个数相同
+     *                tittle 与 一个图标可能有多条曲线, 每个曲线都有一个标题
+     *                XYSeries 是曲线图中的 一条曲线, 其中封装了 曲线名称, X轴和Y轴数据
      */
     public void addXYSeries(XYMultipleSeriesDataset dataset, String[] titles, List<double[]> xValues,
                             List<double[]> yValues, int scale) {
@@ -372,18 +375,17 @@ public class LineView extends View {
     }
 
 
-
     public XYSeries getXYSeries(XYMultipleSeriesDataset dataset, String title, double[] xValues,
-                           double[] yValues, int scale) {
+                                double[] yValues, int scale) {
 
-            XYSeries series = new XYSeries(title, scale); /* 单条曲线数据 */
-                               /* 获取该条曲线的y轴坐标数组 */
-            int seriesLength = xValues.length;
-            for (int k = 0; k < seriesLength; k++) {
-                series.add(xValues[k], yValues[k]);                       /* 将该条曲线的 x,y 轴数组存放到 单条曲线数据中 */
-            }
-           // dataset.addSeries(series);                        /* 将单条曲线数据存放到 图表数据集中 */
-         return  series;
+        XYSeries series = new XYSeries(title, scale); /* 单条曲线数据 */
+        /* 获取该条曲线的y轴坐标数组 */
+        int seriesLength = xValues.length;
+        for (int k = 0; k < seriesLength; k++) {
+            series.add(xValues[k], yValues[k]);                       /* 将该条曲线的 x,y 轴数组存放到 单条曲线数据中 */
+        }
+        // dataset.addSeries(series);                        /* 将单条曲线数据存放到 图表数据集中 */
+        return series;
     }
 
 }
