@@ -67,10 +67,13 @@ public class MainActivity extends AppCompatActivity {
         SeekBar skPreAmp = findViewById(R.id.sk_pre_amp);
 
         skF.setMax(20000);
-        skQ.setMax(10);
-        skGain.setMax(15);
+        skQ.setMax(1000);//0.25 - 10
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            skGain.setMin(-15);
+            skQ.setMin(25);
+        }
+        skGain.setMax(150);//-15 - +15
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            skGain.setMin(-150);
         }
         skPreAmp.setMax(2);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         skQ.setOnSeekBarChangeListener(new SimpleOnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                mEtQ.setText(i + "");
+                mEtQ.setText(i / 100f + "");
                 doUpdate();
             }
         });
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         skGain.setOnSeekBarChangeListener(new SimpleOnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                mEtGain.setText(i + "");
+                mEtGain.setText(i / 10f + "");
                 doUpdate();
             }
         });
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         skQ.setProgress(Integer.parseInt(mEtQ.getText().toString()));
         skGain.setProgress(Integer.parseInt(mEtGain.getText().toString()));
         skPreAmp.setProgress(Integer.parseInt(((EditText) findViewById(R.id.et_pre_amp)).getText().toString()));
-        mEtF.addTextChangedListener(new SimpleTextWatcher(){
+        mEtF.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
                 skF.setProgress(Integer.parseInt(mEtF.getText().toString()));
@@ -121,22 +124,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mEtQ.addTextChangedListener(new SimpleTextWatcher(){
+        mEtQ.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
-                skQ.setProgress(Integer.parseInt(mEtQ.getText().toString()));
+                skQ.setProgress((int) (Double.parseDouble(mEtQ.getText().toString()) * 100));
             }
         });
-        mEtGain.addTextChangedListener(new SimpleTextWatcher(){
+        mEtGain.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
-                skGain.setProgress(Integer.parseInt(mEtGain.getText().toString()));
+                skGain.setProgress((int) (Double.parseDouble(mEtGain.getText().toString()) * 10));
             }
         });
-        ((EditText)findViewById(R.id.et_pre_amp)).addTextChangedListener(new SimpleTextWatcher(){
+        ((EditText) findViewById(R.id.et_pre_amp)).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
-                skPreAmp.setProgress(Integer.parseInt(((EditText)findViewById(R.id.et_pre_amp)).getText().toString()));
+                skPreAmp.setProgress(Integer.parseInt(((EditText) findViewById(R.id.et_pre_amp)).getText().toString()));
             }
         });
 
@@ -250,7 +253,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-    private static class SimpleTextWatcher implements TextWatcher{
+
+    private static class SimpleTextWatcher implements TextWatcher {
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -46,16 +46,11 @@ public class EQActivity extends AppCompatActivity {
         binding.rvEq.setAdapter(mEqAdapter);
         binding.etSampleRate.setText(String.valueOf(fs));
         mLineView = new LineView(EQActivity.this);
-        binding.llChartView.addView(mLineView.execute2("Frequency(Hz)", "Magnitude(dB)"), new FrameLayout.LayoutParams
-                (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+        binding.llChartView.addView(mLineView.execute2("Frequency(Hz)", "Magnitude(dB)"), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
 
-
-        binding.btnVisualizeResponse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                computeCoeffs();
-                visualizeResponse(mCoeffList, fs);
-            }
+        binding.btnVisualizeResponse.setOnClickListener(v -> {
+            computeCoeffs();
+            visualizeResponse(mCoeffList, fs);
         });
 
 
