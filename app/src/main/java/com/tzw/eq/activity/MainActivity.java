@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -50,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        mEtF = (EditText) findViewById(R.id.et_f);
-        mEtQ = (EditText) findViewById(R.id.et_Q);
-        mEtGain = (EditText) findViewById(R.id.et_gain);
-        mEtFs = (EditText) findViewById(R.id.et_fs);
-        mTvCoeffShow = (TextView) findViewById(R.id.tv_coeff_show);
-        mLlChartView = (LinearLayout) findViewById(R.id.ll_chart_view);
+        mEtF = findViewById(R.id.et_f);
+        mEtQ = findViewById(R.id.et_Q);
+        mEtGain = findViewById(R.id.et_gain);
+        mEtFs = findViewById(R.id.et_fs);
+        mTvCoeffShow = findViewById(R.id.tv_coeff_show);
+        mLlChartView = findViewById(R.id.ll_chart_view);
         mLineView = new LineView(MainActivity.this);
         mLlChartView.addView(mLineView.execute("W", "H"), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
 
@@ -111,6 +113,32 @@ public class MainActivity extends AppCompatActivity {
         skQ.setProgress(Integer.parseInt(mEtQ.getText().toString()));
         skGain.setProgress(Integer.parseInt(mEtGain.getText().toString()));
         skPreAmp.setProgress(Integer.parseInt(((EditText) findViewById(R.id.et_pre_amp)).getText().toString()));
+        mEtF.addTextChangedListener(new SimpleTextWatcher(){
+            @Override
+            public void afterTextChanged(Editable editable) {
+                skF.setProgress(Integer.parseInt(mEtF.getText().toString()));
+            }
+        });
+
+
+        mEtQ.addTextChangedListener(new SimpleTextWatcher(){
+            @Override
+            public void afterTextChanged(Editable editable) {
+                skQ.setProgress(Integer.parseInt(mEtQ.getText().toString()));
+            }
+        });
+        mEtGain.addTextChangedListener(new SimpleTextWatcher(){
+            @Override
+            public void afterTextChanged(Editable editable) {
+                skGain.setProgress(Integer.parseInt(mEtGain.getText().toString()));
+            }
+        });
+        ((EditText)findViewById(R.id.et_pre_amp)).addTextChangedListener(new SimpleTextWatcher(){
+            @Override
+            public void afterTextChanged(Editable editable) {
+                skPreAmp.setProgress(Integer.parseInt(((EditText)findViewById(R.id.et_pre_amp)).getText().toString()));
+            }
+        });
 
         Spinner sp = findViewById(R.id.sp);
         final List<String> filters = new ArrayList<>();
@@ -219,6 +247,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    }
+    private static class SimpleTextWatcher implements TextWatcher{
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
 
         }
     }
