@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mBtnComputeCoeffs;
 
+    private boolean 使用默认 = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +61,11 @@ public class MainActivity extends AppCompatActivity {
         mTvCoeffShow = findViewById(R.id.tv_coeff_show);
         mLlChartView = findViewById(R.id.ll_chart_view);
         mLineView = new LineView(MainActivity.this);
-        mLlChartView.addView(mLineView.execute("W", "H"), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-
+        if (使用默认) {
+            mLlChartView.addView(mLineView.execute("W", "H"), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+        } else {
+            mLlChartView.addView(mLineView.execute2("W", "H"), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+        }
         SeekBar skF = findViewById(R.id.sk_f);
         SeekBar skQ = findViewById(R.id.sk_Q);
         SeekBar skGain = findViewById(R.id.sk_gain);
@@ -231,9 +236,15 @@ public class MainActivity extends AppCompatActivity {
         int fs = Integer.parseInt(mEtFs.getText().toString());
         Coeff coeff = computeCoeff(mFilterType, f, q, gain, fs);
         mTvCoeffShow.setText(coeff.toString());
-        double[] h = FrequencyResponse.getFreqzn(coeff, 500);
-        double[] z = FrequencyResponse.getW(500);
-        mLineView.updateLine("FreqRes", z, h);
+        if (使用默认) {
+            double[] h = FrequencyResponse.getFreqzn(coeff, 500);
+            double[] z = FrequencyResponse.getW(500);
+            mLineView.updateLine("FreqRes", z, h);
+        } else {
+            List<Coeff> coeffs = new ArrayList<>();
+            coeffs.add(coeff);
+            visualizeResponse(coeffs, fs);
+        }
     }
 
     private static class SimpleOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
@@ -270,5 +281,44 @@ public class MainActivity extends AppCompatActivity {
         public void afterTextChanged(Editable editable) {
 
         }
+    }
+
+    private void visualizeResponse(List<Coeff> coeffList, int fs) {
+        List<Coeff> validCoeffList = new ArrayList<>();
+        int n = 200;
+        double startF = 20;
+        double endF = 20000;
+        double logStep = (Math.log10(20000) - Math.log10(20)) / n;
+        double[] f = new double[n];
+        double step = Math.pow(10, logStep);
+        for (int i = 0; i < n; i++) {
+            f[i] = startF * Math.pow(step, i); //按对数划分为200个点
+        }
+        double[] semilogf = new double[n];
+        for (int i = 0; i < n; i++) {
+            semilogf[i] = Math.log10(f[i]);  //半对数绘制时，对f取以10为底的对数
+        }
+
+        List<double[]> xValues = new ArrayList<>();
+        List<double[]> yValues = new ArrayList<>();
+        List<String> titleList = new ArrayList<>();
+        for (int i = 0; i < coeffList.size(); i++) {
+            Coeff coeff = coeffList.get(i);
+            if (!Double.isNaN(coeff.getB0()) && !Double.isNaN(coeff.getB1()) && !Double.isNaN(coeff.getB2()) && !Double.isNaN(coeff.getA0()) && !Double.isNaN(coeff.getA1()) && !Double.isNaN(coeff.getA2())) {
+                validCoeffList.add(coeff);
+                double[] h = FrequencyResponse.getFreqzn(coeff, fs, f);
+                xValues.add(semilogf);
+                yValues.add(h);
+                titleList.add("Band" + i);
+            }
+        }
+        if (yValues.size() > 1) {
+            double[] overall = FrequencyResponse.getFreqzn(validCoeffList, fs, f);
+            xValues.add(semilogf);
+            yValues.add(overall);
+            titleList.add("Overall");
+        }
+
+        mLineView.updateLines(titleList.toArray(new String[1]), xValues, yValues, true); //半对数绘制
     }
 }

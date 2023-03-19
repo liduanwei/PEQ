@@ -198,11 +198,10 @@ public class LineView extends View {
         mRenderer.setLegendTextSize(20); // 曲线说明
         mRenderer.setXLabelsColor(Color.BLACK);
         mRenderer.setYLabelsColor(0, Color.BLACK);
-        mRenderer.setXLabels(10);//设置10个XLabels
         mRenderer.setShowLegend(true);
         mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
         mRenderer.setYLabelsPadding(10);
-        mRenderer.setMargins(new int[]{5, 80, 70, 5});// 上左下右{ 20, 30, 100, 0})
+        mRenderer.setMargins(new int[]{30, 30, 5, 10});// 上左下右{ 20, 30, 100, 0})
         XYSeriesRenderer r = new XYSeriesRenderer();
         r.setColor(Color.BLUE);
         r.setChartValuesTextSize(15);
@@ -276,11 +275,11 @@ public class LineView extends View {
             xyMultipleSeriesRenderer.addSeriesRenderer(r);
         }
         XYSeriesRenderer r = new XYSeriesRenderer();
-        r.setColor(Color.BLACK);
+        r.setColor(Color.BLUE);
         r.setChartValuesTextSize(15);
         r.setChartValuesSpacing(3);
         r.setPointStyle(PointStyle.POINT);
-        r.setLineWidth(2);
+        r.setLineWidth(6);
       /*      r.setFillBelowLine(true);
             r.setFillBelowLineColor(Color.WHITE);*/
         r.setFillPoints(true);
@@ -316,11 +315,11 @@ public class LineView extends View {
             xyMultipleSeriesRenderer.addSeriesRenderer(r);
         }
         XYSeriesRenderer r = new XYSeriesRenderer();
-        r.setColor(Color.BLACK);
+        r.setColor(Color.BLUE);
         r.setChartValuesTextSize(15);
         r.setChartValuesSpacing(3);
         r.setPointStyle(PointStyle.POINT);
-        r.setLineWidth(2);
+        r.setLineWidth(6);
       /*      r.setFillBelowLine(true);
             r.setFillBelowLineColor(Color.WHITE);*/
         r.setFillPoints(true);
