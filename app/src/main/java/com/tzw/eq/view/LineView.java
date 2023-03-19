@@ -141,6 +141,7 @@ public class LineView extends View {
          * 渲染器
          */
         XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+        mRenderer.setAntialiasing(true);
         // mRenderer.setChartTitle("随机数据");// 标题
         mRenderer.setXTitle(xTitle); // x轴说明
         mRenderer.setYTitle(yTitle);
@@ -375,9 +376,7 @@ public class LineView extends View {
     }
 
 
-    public XYSeries getXYSeries(XYMultipleSeriesDataset dataset, String title, double[] xValues,
-                                double[] yValues, int scale) {
-
+    public XYSeries getXYSeries(XYMultipleSeriesDataset dataset, String title, double[] xValues, double[] yValues, int scale) {
         XYSeries series = new XYSeries(title, scale); /* 单条曲线数据 */
         /* 获取该条曲线的y轴坐标数组 */
         int seriesLength = xValues.length;
