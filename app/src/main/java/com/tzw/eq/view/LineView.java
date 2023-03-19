@@ -156,7 +156,7 @@ public class LineView extends View {
         mRenderer.setYLabelsAlign(Paint.Align.LEFT);
         mRenderer.setMargins(new int[]{5, 50, 0, 5});// 上左下右{ 20, 30, 100, 0})
         XYSeriesRenderer r = new XYSeriesRenderer();
-        r.setLineWidth(6);
+        r.setLineWidth(3);
         r.setColor(Color.BLUE);
         r.setChartValuesTextSize(15);
         r.setChartValuesSpacing(3);

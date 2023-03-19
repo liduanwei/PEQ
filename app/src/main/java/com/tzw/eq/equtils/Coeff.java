@@ -60,7 +60,8 @@ public class Coeff {
         this.a2 = a2;
     }
 
-    public String toStr(){
+    @Override
+    public String toString(){
         return "b0:"+b0+" b1:"+b1+" b2:"+b2+" a0:"+a0+" a1:"+a1+" a2:"+a2;
     }
 }

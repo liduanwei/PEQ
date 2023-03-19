@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 
 import com.tzw.eq.R;
@@ -35,6 +36,7 @@ public class EQActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_e_q);
         initData();
         mEqAdapter = new AudioTunningEQAdapter(mEqList, this);
@@ -78,7 +80,7 @@ public class EQActivity extends AppCompatActivity {
         for (AudioTunningEQ eq : mEqList) {
             Log.d(TAG, "gain:" + eq.getGain() + " fc:" + eq.getFc() + " bw:" + eq.getBw() + " type:" + eq.getType() + " bypass:" + eq.isBypass());
             Coeff coeff = BiquadDesign.getSectionsMatrix(eq.getGain(), eq.getFc(), eq.getBw(), eq.getType(), eq.isBypass(), fs);
-            Log.d(TAG, "coeff:" + coeff.toStr());
+            Log.d(TAG, "coeff:" + coeff);
             mCoeffList.add(coeff);
         }
 

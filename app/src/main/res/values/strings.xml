@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EQ</string>
+    <string name="app_name">PEQ</string>
     <string name="eq_q">Q</string>
     <string name="eq_gain">Gain\n(dB)</string>
     <string name="eq_freq">Fc\n(Hz)</string>

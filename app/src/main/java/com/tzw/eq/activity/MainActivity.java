@@ -6,6 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -13,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,52 +34,38 @@ public class MainActivity extends AppCompatActivity {
     private static final int LowShelf = 0;
     private static final int PeakShelf = 1;
     private static final int HighShelf = 2;
-    private Button mBtnComputeCoeff;
     private EditText mEtF;
     private EditText mEtQ;
     private EditText mEtGain;
     private EditText mEtFs;
-    private RadioGroup mRgFilter;
-    private RadioButton mRbtnLowShelf;
-    private RadioButton mRbtnPeakShelf;
-    private RadioButton mRbtnHighShelf;
     private TextView mTvCoeffShow;
     private int mFilterType = LowShelf;
-    //  private TextView mTvH;
     private LinearLayout mLlChartView;
     private LineView mLineView;
 
     private Button mBtnComputeCoeffs;
 
-    private SeekBar skF, skQ, skGain, skPreAmp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        mBtnComputeCoeff = (Button) findViewById(R.id.btn_compute_coeff);
         mEtF = (EditText) findViewById(R.id.et_f);
         mEtQ = (EditText) findViewById(R.id.et_Q);
         mEtGain = (EditText) findViewById(R.id.et_gain);
         mEtFs = (EditText) findViewById(R.id.et_fs);
-        mRgFilter = (RadioGroup) findViewById(R.id.rg_filter);
-        mRbtnLowShelf = (RadioButton) findViewById(R.id.rbtn_lowshelf);
-        mRbtnHighShelf = (RadioButton) findViewById(R.id.rbtn_highshelf);
-        mRbtnPeakShelf = (RadioButton) findViewById(R.id.rbtn_peakshelf);
         mTvCoeffShow = (TextView) findViewById(R.id.tv_coeff_show);
-        // mTvH = (TextView)findViewById(R.id.tv_h);
         mLlChartView = (LinearLayout) findViewById(R.id.ll_chart_view);
         mLineView = new LineView(MainActivity.this);
-        mLlChartView.addView(mLineView.execute("W", "H"), new FrameLayout.LayoutParams
-                (FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+        mLlChartView.addView(mLineView.execute("W", "H"), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
 
-        skF = findViewById(R.id.sk_f);
-        skQ = findViewById(R.id.sk_Q);
-        skGain = findViewById(R.id.sk_gain);
-        skPreAmp = findViewById(R.id.sk_pre_amp);
+        SeekBar skF = findViewById(R.id.sk_f);
+        SeekBar skQ = findViewById(R.id.sk_Q);
+        SeekBar skGain = findViewById(R.id.sk_gain);
+        SeekBar skPreAmp = findViewById(R.id.sk_pre_amp);
 
         skF.setMax(20000);
-        skQ.setMax(8);
+        skQ.setMax(10);
         skGain.setMax(15);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             skGain.setMin(-15);
@@ -109,15 +99,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mBtnComputeCoeff.setOnClickListener(v -> doUpdate());
+        skPreAmp.setOnSeekBarChangeListener(new SimpleOnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                ((EditText) findViewById(R.id.et_pre_amp)).setText(i + "");
+                doUpdate();
+            }
+        });
 
-        mRgFilter.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rbtn_lowshelf) {
-                mFilterType = LowShelf;
-            } else if (checkedId == R.id.rbtn_peakshelf) {
-                mFilterType = PeakShelf;
-            } else {
-                mFilterType = HighShelf;
+        skF.setProgress(Integer.parseInt(mEtF.getText().toString()));
+        skQ.setProgress(Integer.parseInt(mEtQ.getText().toString()));
+        skGain.setProgress(Integer.parseInt(mEtGain.getText().toString()));
+        skPreAmp.setProgress(Integer.parseInt(((EditText) findViewById(R.id.et_pre_amp)).getText().toString()));
+
+        Spinner sp = findViewById(R.id.sp);
+        final List<String> filters = new ArrayList<>();
+        filters.add("LowShelf");
+        filters.add("PeakShelf");
+        filters.add("HighShelf");
+        ArrayAdapter<String> filtersAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filters);
+        filtersAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp.setAdapter(filtersAdapter);
+        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                if (filters.get(pos).equals("LowShelf")) {
+                    mFilterType = LowShelf;
+                }
+                if (filters.get(pos).equals("PeakShelf")) {
+                    mFilterType = PeakShelf;
+                }
+                if (filters.get(pos).equals("HighShelf")) {
+                    mFilterType = HighShelf;
+                }
+
+                doUpdate();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -125,20 +146,13 @@ public class MainActivity extends AppCompatActivity {
         mBtnComputeCoeffs.setOnClickListener(v -> {
             double[] h = FrequencyResponse.getFreqzn(generateCoeffs(), 100);
             double[] z = FrequencyResponse.getW(100);
-//            Log.d("tzw", "h:" + Arrays.toString(h));
-//            Log.d("tzw", "z: " + Arrays.toString(z));
-            // mTvH.setText(Arrays.toString(h));
             mLineView.updateLine("FreqRes", z, h);
         });
 
     }
 
-    private Coeff computeCoeff(int type) {
-        double f = Double.parseDouble(mEtF.getText().toString());
-        double q = Double.parseDouble(mEtQ.getText().toString());
-        double gain = Double.parseDouble(mEtGain.getText().toString());
-        int fs = Integer.parseInt(mEtFs.getText().toString());
-        Coeff coeff = new Coeff();
+    private Coeff computeCoeff(int type, double f, double q, double gain, int fs) {
+        Coeff coeff = null;
         switch (type) {
             case LowShelf:
                 coeff = Filter.getLowShelfEQ(f, q, gain, fs);
@@ -176,18 +190,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void doUpdate() {
-        if (!mEtF.getText().toString().isEmpty() && !mEtQ.getText().toString().isEmpty() && !mEtGain.getText().toString().isEmpty() && !mEtFs.getText().toString().isEmpty()) {
-            Coeff coeff = computeCoeff(mFilterType);
-            mTvCoeffShow.setText(coeff.toStr());
-            double[] h = FrequencyResponse.getFreqzn(coeff, 100);
-            double[] z = FrequencyResponse.getW(100);
-            Log.d("tzw", "h:" + Arrays.toString(h));
-            Log.d("tzw", "z: " + Arrays.toString(z));
-            // mTvH.setText(Arrays.toString(h));
-            mLineView.updateLine("FreqRes", z, h);
-        } else {
+        if (mEtF.getText().toString().isEmpty() || mEtQ.getText().toString().isEmpty() || mEtGain.getText().toString().isEmpty() || mEtFs.getText().toString().isEmpty()) {
             Toast.makeText(MainActivity.this, "请先输入数据", Toast.LENGTH_SHORT).show();
+            return;
         }
+        double f = Double.parseDouble(mEtF.getText().toString());
+        double q = Double.parseDouble(mEtQ.getText().toString());
+        double gain = Double.parseDouble(mEtGain.getText().toString());
+        int fs = Integer.parseInt(mEtFs.getText().toString());
+        Coeff coeff = computeCoeff(mFilterType, f, q, gain, fs);
+        mTvCoeffShow.setText(coeff.toString());
+        double[] h = FrequencyResponse.getFreqzn(coeff, 500);
+        double[] z = FrequencyResponse.getW(500);
+        mLineView.updateLine("FreqRes", z, h);
     }
 
     private static class SimpleOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {

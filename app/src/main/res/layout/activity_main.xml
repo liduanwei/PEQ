@@ -13,19 +13,21 @@
         android:layout_margin="10dp"
         android:text="Coeff"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_coeff_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
+        android:layout_margin="2dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_chart_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="2dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -49,9 +51,10 @@
 
         <EditText
             android:id="@+id/et_f"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:hint="f:" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="f:"
+            android:text="16000" />
 
         <SeekBar
             android:id="@+id/sk_f"
@@ -67,9 +70,10 @@
 
         <EditText
             android:id="@+id/et_Q"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:hint="Q:" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Q:"
+            android:text="3" />
 
         <SeekBar
             android:id="@+id/sk_Q"
@@ -86,9 +90,10 @@
 
         <EditText
             android:id="@+id/et_gain"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:hint="gain:" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="gain:"
+            android:text="5" />
 
         <SeekBar
             android:id="@+id/sk_gain"
@@ -104,9 +109,10 @@
 
         <EditText
             android:id="@+id/et_pre_amp"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:hint="preAmp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="preAmp"
+            android:text="2" />
 
         <SeekBar
             android:id="@+id/sk_pre_amp"
@@ -122,9 +128,10 @@
 
         <EditText
             android:id="@+id/et_fs"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:hint="fs: 48000" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="fs: 48000"
+            android:text="48000" />
     </LinearLayout>
 
 
@@ -138,46 +145,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Type:" />
+            android:text="FilterType:" />
 
-        <RadioGroup
-            android:id="@+id/rg_filter"
+        <Spinner
+            android:id="@+id/sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rbtn_lowshelf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="LowShelf" />
-
-            <RadioButton
-                android:id="@+id/rbtn_peakshelf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PeakShelf" />
-
-            <RadioButton
-                android:id="@+id/rbtn_highshelf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HighShelf" />
-
-
-        </RadioGroup>
-
+            android:layout_height="wrap_content" />
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btn_compute_coeff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Compute" />
-
 </LinearLayout>

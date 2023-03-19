@@ -34,7 +34,6 @@ public class FrequencyResponse {
         Complex a1 = complex.mul(coeff.getA1());
         Complex hdown =a2.add(a1).add(coeff.getA0());
         Complex res = hup.div(hdown);
-       // Log.d("tzw", "getFreqw: "+res.getReal()+"+"+res.getImage()+"i");
         return res;
     }
 
